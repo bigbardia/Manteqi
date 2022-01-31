@@ -1,3 +1,3 @@
 # Manteqi
 
-This is Lugitik
+link : http://manteqye.pythonanywhere.com/
