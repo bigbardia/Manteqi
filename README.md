@@ -1,0 +1,3 @@
+# Manteqi
+
+This is Lugitik
