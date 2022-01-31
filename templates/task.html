@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write Your Tasks!</title>
+    <style>
+        body {
+            background-image: url("{{background}}");
+            background-color :black;
+            text-align: center;        
+        }
+        p {
+            color: white;
+            font-size: xx-large;
+            display: inline;
+        }
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form method = 'post'> {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" name="submit" value="add">
+    </form>
+
+    <form ></form>
+    
+    <br>
+    <br>
+
+{% for task in tasks.all %}
+<div >
+    {% if task.done %}
+    <strike style="color: red;"><p style="color: white;">{{task.title}}</p></strike>
+    {%else %}
+    <p style="color: white;">{{task.title}}</p>
+    {% endif %}
+    &nbsp; <form method="post">{% csrf_token %} <input type="hidden" value="{{task.pk}}" name="pk">  <input type="submit" value="delete" name="delete" style="font-size: 10px;"> </form>
+    <br> 
+    <time style="color: white; font-size: smaller;" datetime="{{task.date_added}}">{{task.date_added}}</time> <br><br>
+    <form method='post' name='check'>{% csrf_token %} <label style="color: white;" for="done">Done</label> 
+        {% if task.done %}
+        <input type="hidden" name="done" value="{{task.pk}}">
+        <input type="checkbox"  value="{{task.pk}}" name="done" checked onchange="submit()">
+        {% else %}
+        <input type="checkbox"  value="{{task.pk}}" name="done"  onchange="submit()">
+        {% endif %}
+    </form>
+    <br>
+    <p>-----------</p>
+</div>
+{% endfor %}
+
+
+{% if messages %}
+
+{% for msg in messages %}
+
+<p>{{msg}}</p>
+
+{% endfor %}
+
+{% endif %}
+</body>
+</html>
